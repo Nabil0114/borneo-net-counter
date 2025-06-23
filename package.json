@@ -1,0 +1,27 @@
+{
+  "name": "net-counter",
+  "version": "1.0.0",
+  "description": "A simple NET counter app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Nabil0114",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.14.3"
+  },
+  "build": {
+    "appId": "com.nabil0114.netcounter",
+    "productName": "NET Counter",
+    "win": {
+      "target": "msi"
+    },
+    "files": [
+      "**/*"
+    ]
+  }
+}
