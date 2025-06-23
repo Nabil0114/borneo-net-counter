@@ -1,0 +1,83 @@
+let counter = 1000;
+let netName = "NET1000";
+const minCounter = 0;
+
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const netNameDiv = document.getElementById('net-name');
+const openBtn = document.getElementById('open');
+const saveBtn = document.getElementById('save');
+const closeBtn = document.getElementById('close');
+const pushInput = document.getElementById('push-input');
+const pushBtn = document.getElementById('push-btn');
+const counterSpan = document.getElementById('counter');
+
+function updateDisplay() {
+  netNameDiv.innerText = netName;
+  counterSpan.innerText = counter;
+  pushInput.value = counter;
+}
+
+prevBtn.onclick = () => {
+  if (counter > minCounter) {
+    counter--;
+    updateDisplay();
+    window.electronAPI.copyToClipboard(counter.toString());
+  }
+};
+
+nextBtn.onclick = () => {
+  counter++;
+  updateDisplay();
+  window.electronAPI.copyToClipboard(counter.toString());
+};
+
+netNameDiv.onclick = () => {
+  window.electronAPI.copyToClipboard(netName);
+};
+
+pushBtn.onclick = () => {
+  let val = parseInt(pushInput.value, 10);
+  if (!isNaN(val) && val >= minCounter) {
+    counter = val;
+    updateDisplay();
+  }
+};
+
+openBtn.onclick = async () => {
+  let content = await window.electronAPI.openFile();
+  if (content !== null) {
+    try {
+      let [name, val] = content.trim().split(":");
+      netName = name || netName;
+      counter = parseInt(val, 10) || counter;
+      updateDisplay();
+    } catch {}
+  }
+};
+
+saveBtn.onclick = async () => {
+  let data = `${netName}:${counter}`;
+  await window.electronAPI.saveFile(data);
+};
+
+closeBtn.onclick = () => {
+  window.electronAPI.closeApp();
+};
+
+updateDisplay();
+
+// Drag window support
+let isDragging = false, dragOffset = {x:0, y:0};
+const bar = document.getElementById('app-bar');
+bar.onmousedown = e => {
+  if (e.target.className !== 'bar') return;
+  isDragging = true;
+  dragOffset = { x: e.clientX, y: e.clientY };
+};
+window.onmouseup = () => { isDragging = false; };
+window.onmousemove = e => {
+  if (isDragging) {
+    window.electronAPI.moveWindow({ x: e.screenX - dragOffset.x, y: e.screenY - dragOffset.y });
+  }
+};
