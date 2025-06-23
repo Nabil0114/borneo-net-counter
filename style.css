@@ -1,0 +1,62 @@
+body {
+  background: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+.bar {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background: #111;
+  border-radius: 15px;
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+.btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  margin: 0 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-app-region: no-drag;
+}
+
+.input {
+  background: #fff;
+  color: #111;
+  border-radius: 8px;
+  padding: 4px 10px;
+  margin: 0 3px;
+  min-width: 45px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  -webkit-app-region: no-drag;
+}
+
+#push-input {
+  width: 60px;
+  margin: 0 3px;
+  border-radius: 6px;
+  border: none;
+  padding: 4px;
+  font-size: 16px;
+  background: #fff;
+  color: #111;
+  text-align: center;
+  -webkit-app-region: no-drag;
+}
+
+#counter {
+  min-width: 45px;
+  margin: 0 3px;
+}
